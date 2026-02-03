@@ -1,0 +1,23 @@
+<div class="products-container">
+  <div class="header">
+    <h1>Products Management</h1>
+    <button class="btn-add-new" (click)="onAddNew()">+ Add New Product</button>
+  </div>
+
+  <app-filter-panel (filterChange)="onFilterChange($event)"></app-filter-panel>
+
+  <app-product-form
+    *ngIf="showForm"
+    [product]="selectedProduct"
+    [isSubmitting]="isSubmitting"
+    (submit)="onFormSubmit($event)"
+    (cancel)="onFormCancel()"
+  ></app-product-form>
+
+  <app-product-table
+    [products]="products"
+    [isLoading]="isLoading"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)"
+  ></app-product-table>
+</div>

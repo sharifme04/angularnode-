@@ -1,0 +1,24 @@
+<div class="filter-panel">
+  <div class="filter-group">
+    <input
+      type="text"
+      placeholder="Search by name or description..."
+      [value]="search"
+      (input)="onSearchChange($event.target.value)"
+      class="filter-input"
+    />
+  </div>
+
+  <div class="filter-group">
+    <select
+      [value]="category"
+      (change)="onCategoryChange($event.target.value)"
+      class="filter-select"
+    >
+      <option value="">All Categories</option>
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+    </select>
+  </div>
+
+  <button class="btn-reset" (click)="resetFilters()">Reset Filters</button>
+</div>

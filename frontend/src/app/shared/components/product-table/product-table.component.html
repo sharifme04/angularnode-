@@ -1,0 +1,33 @@
+<div class="table-container">
+  <div *ngIf="isLoading" class="loading">Loading...</div>
+  
+  <div *ngIf="!isLoading && products.length === 0" class="no-data">
+    No products found
+  </div>
+
+  <table *ngIf="!isLoading && products.length > 0" class="products-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products; trackBy: trackByProductId">
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>${{ product.price | number: '1.2-2' }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>{{ product.category }}</td>
+        <td class="actions">
+          <button class="btn-edit" (click)="onEdit(product)">Edit</button>
+          <button class="btn-delete" (click)="onDelete(product._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
