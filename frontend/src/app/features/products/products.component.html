@@ -10,7 +10,7 @@
     *ngIf="showForm"
     [product]="selectedProduct"
     [isSubmitting]="isSubmitting"
-    (submit)="onFormSubmit($event)"
+    (formSubmit)="onFormSubmit($event)"
     (cancel)="onFormCancel()"
   ></app-product-form>
 

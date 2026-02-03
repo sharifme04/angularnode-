@@ -13,7 +13,7 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
-      "architect": {
+      "targets": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
@@ -62,16 +62,16 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "browserTarget": "crud-frontend:build",
+          "buildTarget": "crud-frontend:build",
           "options": {
             "port": 4200
           },
           "configurations": {
             "production": {
-              "browserTarget": "crud-frontend:build:production"
+              "buildTarget": "crud-frontend:build:production"
             },
             "development": {
-              "browserTarget": "crud-frontend:build:development"
+              "buildTarget": "crud-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "crud-frontend:build"
+            "buildTarget": "crud-frontend:build"
           }
         },
         "test": {

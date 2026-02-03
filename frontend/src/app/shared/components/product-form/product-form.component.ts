@@ -14,7 +14,7 @@ import { Product } from '../../../core/services/product.service';
 export class ProductFormComponent implements OnChanges {
   @Input() product: Product | null = null;
   @Input() isSubmitting = false;
-  @Output() submit = new EventEmitter<Product>();
+  @Output() formSubmit = new EventEmitter<Product>();
   @Output() cancel = new EventEmitter<void>();
 
   form: FormGroup;
@@ -42,7 +42,7 @@ export class ProductFormComponent implements OnChanges {
 
   onSubmit() {
     if (this.form.valid) {
-      this.submit.emit(this.form.value);
+      this.formSubmit.emit(this.form.value);
     }
   }
 

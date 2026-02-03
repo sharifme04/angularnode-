@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService, Product } from '../../core/services/product.service';
 import { ProductTableComponent } from '../../shared/components/product-table/product-table.component';
@@ -24,7 +24,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private currentFilter: FilterCriteria = { search: '', category: '' };
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.loadProducts();
@@ -40,13 +40,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productService.getProducts(this.currentFilter.search, this.currentFilter.category)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response) => {
-          this.products = response.data || [];
-          this.isLoading = false;
-        },
+            next: (response) => {
+              this.products = response.data ? [...response.data] : [];
+              this.isLoading = false;
+              this.cdr.markForCheck();
+            },
         error: (error) => {
           console.error('Error loading products:', error);
           this.isLoading = false;
+          this.cdr.markForCheck();
         }
       });
   }
@@ -79,10 +81,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
     const request$ = this.selectedProduct
       ? this.productService.updateProduct(this.selectedProduct._id!, product)
       : this.productService.createProduct(product);
-
     request$.pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: () => {
+        next: (response) => {
           this.showForm = false;
           this.selectedProduct = null;
           this.isSubmitting = false;
